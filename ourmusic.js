@@ -24,10 +24,10 @@ if (Meteor.isServer) {
 
 if (Meteor.isCordova) {
   Meteor.startup(function () {
-    __login__(function(message) {
-        window.alert(message);
+    OurMusicPlugin.login(function(message) {
+        alert(message);
     }, function(error) {
-        window.alert(error);
+        alert(error);
     });
   });
 }
