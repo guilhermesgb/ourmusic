@@ -1,0 +1,10 @@
+{
+    "com.ourmusic.plugin": {
+        "source": {
+            "type": "local",
+            "path": "ourmusic-plugin"
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}
