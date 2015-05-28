@@ -23,9 +23,11 @@ if (Meteor.isServer) {
 }
 
 if (Meteor.isCordova) {
-  window.login(function(message) {
-      window.alert(message);
-  }, function(error) {
-      window.alert(error);
+  Meteor.startup(function () {
+    __login__(function(message) {
+        window.alert(message);
+    }, function(error) {
+        window.alert(error);
+    });
   });
 }
