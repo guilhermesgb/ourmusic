@@ -1,7 +1,7 @@
 angular.module('ourmusic',['angular-meteor', 'ui.router','ngMaterial']).config(["$mdThemingProvider",function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('green')
-    .accentPalette('orange');
+    .primaryPalette('deep-orange')
+    .accentPalette('green');
 }]);
 
 function onReady() {

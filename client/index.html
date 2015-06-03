@@ -4,17 +4,24 @@
   <link rel="stylesheet" type="text/css" href="/materialize/css/materialize.css">
 </head>
 
-<body layout="row">
-  <div layout="column" layout-fill role="main">
-    <div class="navbar-fixed">    
-      <nav>
-	<div class="nav-wrapper">
-	 <a href="#" class="brand-logo">OurMusic</a>
-	</div>
-      </nav>
+<body layout="column" layout-align="start">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>
+        <span>OurMusic</span>
+      </h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="Favorite">
+        <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="More">
+        <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+      </md-button>
     </div>
+  </md-toolbar>
+  <md-content flex md-scroll-y fill-parent style="background-color:#rgb(255,124,113);">
     <ui-view></ui-view>
-  </div>
+  </md-content>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="/materialize/js/bin/materialize.min.js"></script>
 </body>
