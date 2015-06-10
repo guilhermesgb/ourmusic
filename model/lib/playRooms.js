@@ -13,24 +13,24 @@ PlayRooms.allow({
 });
 
 Meteor.methods({
-    play: function(roomId, playerState) {
+    play: function(roomId) {
         check(roomId, String);
-        if (!playerState) {
-            throw new Meteor.Error(404, "Invalid player state");
-        }
-        check(playerState.trackUri, String);
-        check(playerState.positionInMs, Number);
         var playRoom = PlayRooms.findOne({
             'roomId': roomId
         });
         if (!playRoom) {
             throw new Meteor.Error(404, "No such play room");
         }
+        if (!playRoom.playerState) {
+            throw new Meteor.Error(404, "Invalid player state");
+        }
+        check(playRoom.playerState.trackUri, String);
+        check(playRoom.playerState.positionInMs, Number);
+
         var token = "SPOTIFY_TOKEN";
-        OurMusicPlugin.play(playerState.trackUri,
-                playerState.positionInMs, token, function(newPlayerState) {
-            window.alert(newPlayerState.positionInMs);
-            window.alert(newPlayerState);
+        OurMusicPlugin.play(playRoom.playerState.trackUri,
+                playRoom.playerState.positionInMs, token,
+                function(newPlayerState) {
             PlayRooms.update({
                 _id: playRoom._id,
             },
