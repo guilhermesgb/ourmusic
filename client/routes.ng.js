@@ -10,7 +10,7 @@ angular.module("ourmusic").run(
 );
 
 angular.module("ourmusic").config(
-    function($urlRouterProvider, $stateProvider, $locationProvider){
+    function($urlRouterProvider, $stateProvider, $locationProvider, $meteor){
         $locationProvider.html5Mode(true);
         $stateProvider
             .state('play_room', {
