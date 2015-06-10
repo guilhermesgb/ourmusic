@@ -5,17 +5,17 @@ angular.module("ourmusic").controller("PlayRoomCtrl", [
             $scope.playRoom = $meteor.object(PlayRooms, {
                 'roomId': 'GLOBAL'
             });
-        });
 
-        $scope.startOrResumePlaying = function() {
-            $meteor.call("play", $scope.playRoom.roomId,
-              $scope.playRoom.playerState).then(
-                function(message) {
-                    alert(message);
-                }, function(error) {
-                    alert(error);
-                }
-              );
-        }
+            $scope.startOrResumePlaying = function() {
+                $meteor.call("play", $scope.playRoom.roomId,
+                  $scope.playRoom.playerState).then(
+                    function(message) {
+                        alert(message);
+                    }, function(error) {
+                        alert(error);
+                    }
+                  );
+            }
+        });
     }
 ]);

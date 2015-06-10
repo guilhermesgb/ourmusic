@@ -17,14 +17,7 @@ angular.module("ourmusic").config([
         $stateProvider.state('play_room', {
                 url: '/play_room',
                 templateUrl: 'client/play_room/views/playRoom.ng.html',
-                controller: 'PlayRoomCtrl',
-                resolve: {
-                    'subscribe': [
-                        '$meteor', function($meteor) {
-                            return $meteor.subscribe('play_rooms');
-                        }
-                    ]
-                }
+                controller: 'PlayRoomCtrl'
             }
         );
         $urlRouterProvider.otherwise("/play_room");
