@@ -10,18 +10,12 @@ angular.module("ourmusic").run(
 );
 
 angular.module("ourmusic").config(
-    function($urlRouterProvider, $stateProvider, $locationProvider, $meteor){
+    function($urlRouterProvider, $stateProvider, $locationProvider){
         $locationProvider.html5Mode(true);
-        $stateProvider
-            .state('play_room', {
+        $stateProvider.state('play_room', {
                 url: '/play_room',
                 templateUrl: 'client/play_room/views/playRoom.ng.html',
-                controller: 'PlayRoomCtrl',
-                resolve: {
-                    'subscribe': function($meteor) {
-                        return $meteor.subscribe('play_rooms');
-                    }
-                }
+                controller: 'PlayRoomCtrl'
             }
         );
         $urlRouterProvider.otherwise("/play_room");
