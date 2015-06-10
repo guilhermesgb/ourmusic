@@ -29,13 +29,16 @@ Meteor.methods({
         var token = "SPOTIFY_TOKEN";
         OurMusicPlugin.play(playerState.trackUri,
                 playerState.positionInMs, token, function(newPlayerState) {
-            PlayRooms.update(playRoom.id, {
+            PlayRooms.update({
+                _id: playRoom._id,
+            },
+            {
                 $set: {
                     playerState: newPlayerState
                 }
             });
         }, function(error) {
-            throw new Meteor.Error(404, "Error playing track; " + error);
+            throw new Meteor.Error(500, "Error playing track; " + error);
         });
     }
 });
