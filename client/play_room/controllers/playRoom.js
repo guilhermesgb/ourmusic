@@ -1,11 +1,7 @@
 angular.module("ourmusic").controller("PlayRoomCtrl",
     function($scope, $stateParams, $meteor){
-        $meteor.subscribe("play_rooms", {
+        $scope.playRoom = $meteor.object(PlayRooms, {
             'roomId': 'GLOBAL'
-        }).then(function(subscription) {
-            $scope.playRoom = $meteor.object(PlayRooms, {
-                'roomId': 'GLOBAL'
-            });
         });
 
         $scope.startOrResumePlaying = function() {
