@@ -8,8 +8,8 @@ angular.module("ourmusic").controller("PlayRoomCtrl", [
 
             $scope.startOrResumePlaying = function() {
                 $meteor.call("play", $scope.playRoom.roomId).then(
-                    function(message) {
-                        alert(message);
+                    function() {
+                        console.log("Play request placed successfully.");
                     }, function(error) {
                         alert(error);
                     }

@@ -27,20 +27,22 @@ Meteor.methods({
         check(playRoom.playerState.trackUri, String);
         check(playRoom.playerState.positionInMs, Number);
 
-        var token = "SPOTIFY_TOKEN";
-        OurMusicPlugin.play(playRoom.playerState.trackUri,
-                playRoom.playerState.positionInMs, token,
-                function(newPlayerState) {
-            PlayRooms.update({
-                _id: playRoom._id,
-            },
-            {
-                $set: {
-                    "playerState.positionInMs": newPlayerState.positionInMs
-                }
+        if (Meteor.isCordova) {
+            var token = "SPOTIFY_TOKEN";
+            OurMusicPlugin.play(playRoom.playerState.trackUri,
+                    playRoom.playerState.positionInMs, token,
+                    function(newPlayerState) {
+                PlayRooms.update({
+                    _id: playRoom._id,
+                },
+                {
+                    $set: {
+                        "playerState.positionInMs": newPlayerState.positionInMs
+                    }
+                });
+            }, function(error) {
+                throw new Meteor.Error(500, "Error playing track; " + error);
             });
-        }, function(error) {
-            throw new Meteor.Error(500, "Error playing track; " + error);
-        });
+        }
     }
 });
