@@ -1,7 +1,7 @@
 if (Meteor.isCordova) {
   Meteor.startup(function () {
     OurMusicPlugin.login(function(message) {
-        alert(message);
+        console.log(message);
     }, function(error) {
         alert(error);
     });
