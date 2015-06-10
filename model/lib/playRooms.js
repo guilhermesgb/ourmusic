@@ -29,12 +29,14 @@ Meteor.methods({
         var token = "SPOTIFY_TOKEN";
         OurMusicPlugin.play(playerState.trackUri,
                 playerState.positionInMs, token, function(newPlayerState) {
+            window.alert(newPlayerState.positionInMs);
+            window.alert(newPlayerState);
             PlayRooms.update({
                 _id: playRoom._id,
             },
             {
                 $set: {
-                    playerState: newPlayerState
+                    "playerState.positionInMs": newPlayerState.positionInMs
                 }
             });
         }, function(error) {
