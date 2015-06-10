@@ -16,7 +16,7 @@ angular.module("ourmusic").config([
         $locationProvider.html5Mode(true);
         $stateProvider.state('play_room', {
                 url: '/play_room',
-                templateUrl: 'client/play_room/views/playRoom.ng.html',
+                templateUrl: 'client/views/playRoom.ng.html',
                 controller: 'PlayRoomCtrl'
             }
         );

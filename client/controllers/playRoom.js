@@ -6,10 +6,20 @@ angular.module("ourmusic").controller("PlayRoomCtrl", [
                 'roomId': 'GLOBAL'
             });
 
-            $scope.startOrResumePlaying = function() {
+            $scope.startOrResumePlayer = function() {
                 $meteor.call("play", $scope.playRoom.roomId).then(
                     function() {
                         console.log("Play request placed successfully.");
+                    }, function(error) {
+                        alert(error);
+                    }
+                );
+            }
+
+            $scope.pausePlayer = function() {
+                $meteor.call("pause", $scope.playRoom.roomId).then(
+                    function() {
+                        console.log("Pause request placed successfully.");
                     }, function(error) {
                         alert(error);
                     }
