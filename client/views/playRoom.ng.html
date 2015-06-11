@@ -1,8 +1,8 @@
-<div ng-switch on="playRoom.playerState" class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a ng-switch-default class="btn-floating btn-large red" href="#" ng-click="startOrResumePlayer()">
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a ng-if="playRoom.playerState.playing != true" class="btn-floating btn-large red" href="#" ng-click="startOrResumePlayer()">
         <i class="large mdi-av-play-arrow"></i>
     </a>
-    <a ng-switch-when="playRoom.playerState.playing === true" class="btn-floating btn-large red" href="#" ng-click="pausePlayer()">
+    <a ng-if="playRoom.playerState.playing === true" class="btn-floating btn-large red" href="#" ng-click="pausePlayer()">
         <i class="large mdi-av-pause"></i>
     </a>
 </div>

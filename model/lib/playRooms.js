@@ -61,7 +61,8 @@ Meteor.methods({
         }
 
         if (Meteor.isCordova) {
-            OurMusicPlugin.pause(function(newPlayerState) {
+            var token = "SPOTIFY_TOKEN";
+            OurMusicPlugin.pause(token, function(newPlayerState) {
                 PlayRooms.update({
                     _id: playRoom._id,
                 },
