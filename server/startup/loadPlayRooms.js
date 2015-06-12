@@ -6,11 +6,12 @@ if (PlayRooms.find().count() === 0) {
             'roomId': 'GLOBAL',
             'playerState': {
                 'playing': false,
-                'trackUri': 'spotify:track:2TpxZ7JUBn3uw46aR7qd6V',
+                'trackUri': 'spotify:track:6q9CRTF8dyABIcKj7bCJwf',
                 'positionInMs': 0,
                 'durationInMs': 36000
             },
-            'playlist': null
+            'playlist': ['spotify:track:6q9CRTF8dyABIcKj7bCJwf', "spotify:track:0eGsygTp906u18L0Oimnem"],
+	    'playlistPos': 0
         }
     ];
     for (var i=0; i<playRooms.length; i++) {
