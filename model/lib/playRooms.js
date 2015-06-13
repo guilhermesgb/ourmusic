@@ -13,27 +13,6 @@ PlayRooms.allow({
 });
 
 Meteor.methods({
-    // This function is going to change a lot...
-    // The ideia is to use this function for client recovery:
-    //   - refresh_token
-    //   - room
-    //   - playerState
-    //   - add inside a zookeeper group
-    initialize: function(){
-	Tracker.autorun(function(c){
-	    if(!PlayRooms.findOne()){
-		return;
-	    }
-	    c.stop();
-	    var roomId = "GLOBAL";
-            var playRoom = PlayRooms.findOne({
-		'roomId': roomId
-            });
-	    if(playRoom && playRoom.playerState &&  playRoom.playerState.playing ){
-		Meteor.call("play", roomId);
-	    }
-	});
-    },
     play: function(roomId) {
         check(roomId, String);
         var playRoom = PlayRooms.findOne({
@@ -48,7 +27,7 @@ Meteor.methods({
         check(playRoom.playerState.trackUri, String);
         check(playRoom.playerState.positionInMs, Number);
         if (Meteor.isCordova) {
-            var token = "SPOTIFY_TOKEN";
+            var token = Session.get("authToken");
             OurMusicPlugin.play(playRoom.playerState.trackUri,
                     playRoom.playerState.positionInMs, token, successPlayStopCallback(roomId),
 		function(error) {
@@ -68,7 +47,7 @@ Meteor.methods({
             throw new Meteor.Error(404, "Invalid player state");
         }
         if (Meteor.isCordova) {
-            var token = "SPOTIFY_TOKEN";
+	    var token = Session.get("authToken");
             OurMusicPlugin.pause(token, successPlayStopCallback(roomId), 
 		function(error) {
                     throw new Meteor.Error(500, "Error playing track; " + error);

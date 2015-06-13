@@ -1,9 +1,12 @@
 if (Meteor.isCordova) {
   Meteor.startup(function () {
+    Session.setDefault("playerInitialized", false);
     OurMusicPlugin.login(function(message) {
-        console.log(message);
+        console.log("Login: " + message);
 	if(message == "PLAYER_INITIALIZED") {
-	    Meteor.call("initialize");
+	    Session.set("playerInitialized", true);
+	} else {
+	    Session.set("authToken", message);
 	}
     }, function(error) {
         alert(error);

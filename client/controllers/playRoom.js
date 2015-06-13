@@ -6,6 +6,17 @@ angular.module("ourmusic").controller("PlayRoomCtrl", [
                 'roomId': 'GLOBAL'
             });
 
+	    /////////// Plays if the server says to /////////////
+	    $meteor.session("playerInitialized").bind($scope, "playerInitialized");
+	    $meteor.autorun($scope, function (c) {
+		if(Session.get("playerInitialized") && $scope.playRoom.playerState.playing) {
+		    c.stop();
+		    console.log("Continue Playing... " + $scope.playing);
+		    $meteor.call("play",$scope.playRoom.roomId);
+		}
+	    });
+	    //////////////////////////////////////////////////////
+
             $scope.startOrResumePlayer = function() {
                 $meteor.call("play", $scope.playRoom.roomId).then(
                     function() {
