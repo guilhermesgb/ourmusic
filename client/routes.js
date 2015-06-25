@@ -20,6 +20,13 @@ angular.module("ourmusic").config([
                 controller: 'PlayRoomCtrl'
             }
         );
-        $urlRouterProvider.otherwise("/play_room");
+	$stateProvider.state('login', {
+                url: '/login',
+                templateUrl: 'client/views/login.ng.html',
+                controller: 'LoginCtrl'
+            }
+        );
+	// TODO(danilon) change to /play_room
+        $urlRouterProvider.otherwise("/login");
     }
 ]);

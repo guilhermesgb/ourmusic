@@ -1,5 +1,6 @@
 console.log("About to define GLOBAL playRoom");
 PlayRooms.remove({});
+Meteor.users.remove({});
 if (PlayRooms.find().count() === 0) {
     var playRooms = [
         {
