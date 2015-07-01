@@ -13,7 +13,7 @@ PlayRooms.allow({
 });
 
 Meteor.methods({
-    play: function(roomId) {
+    play: function(roomId, playbackCallbackError) {
         check(roomId, String);
         var playRoom = PlayRooms.findOne({
             'roomId': roomId
@@ -30,12 +30,12 @@ Meteor.methods({
 	    var token = Meteor.user().accessToken;
             OurMusicPlugin.play(playRoom.playerState.trackUri,
                     playRoom.playerState.positionInMs, token, successPlayStopCallback(roomId),
-		function(error) {
-                    throw new Meteor.Error(500, "Error playing track; " + error);
-		});
+		    function(error) {
+			playbackError(error,playbackCallbackError);
+		    });
         }
     },
-    pause: function(roomId) {
+    pause: function(roomId, playbackCallbackError) {
         check(roomId, String);
         var playRoom = PlayRooms.findOne({
             'roomId': roomId
@@ -50,7 +50,7 @@ Meteor.methods({
 	    var token = Meteor.user().accessToken;
             OurMusicPlugin.pause(token, successPlayStopCallback(roomId), 
 		function(error) {
-                    throw new Meteor.Error(500, "Error playing track; " + error);
+		    playbackError(error,playbackCallbackError);
 		});
         }
     },
@@ -102,4 +102,17 @@ function successPlayStopCallback(roomId){
 	    }
 	});
     }   
+};
+
+playbackError = function(error, playbackCallbackError) {
+    if (error === "TOKEN_UNAUTHORIZED") {
+	Meteor.logout();
+	playbackCallbackError(error);
+    }
+    if (error === "TRACK_UNAVAILABLE"){
+	Meteor.call("skip",roomId);
+    }
+    if (error === "UNKNOWN") {
+	playbackCallbackError(error);
+    }
 };

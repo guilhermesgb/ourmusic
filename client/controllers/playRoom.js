@@ -1,13 +1,21 @@
 angular.module("ourmusic").controller("PlayRoomCtrl", [
-    '$scope', '$stateParams', '$meteor',
-    function($scope, $stateParams, $meteor) {
+    '$scope', '$stateParams', '$meteor','$state',
+    function($scope, $stateParams, $meteor,$state) {
         $meteor.subscribe("play_rooms").then(function(subscription) {
             $scope.playRoom = $meteor.object(PlayRooms, {
                 'roomId': 'GLOBAL'
             });
 
+	    playbackCallbackError = function(error){
+		if (error === "TOKEN_UNAUTHORIZED") {
+		    $state.go('login');
+		} else {
+		    alert(error + " error, Try Again...");
+		}
+	    }
+	    
             $scope.startOrResumePlayer = function() {
-                $meteor.call("play", $scope.playRoom.roomId).then(
+                $meteor.call("play", $scope.playRoom.roomId, playbackCallbackError).then(
                     function() {
                         console.log("Play request placed successfully.");
                     }, function(error) {
@@ -17,7 +25,7 @@ angular.module("ourmusic").controller("PlayRoomCtrl", [
             }
 
             $scope.pausePlayer = function() {
-                $meteor.call("pause", $scope.playRoom.roomId).then(
+                $meteor.call("pause", $scope.playRoom.roomId, playbackCallbackError).then(
                     function() {
                         console.log("Pause request placed successfully.");
                     }, function(error) {
