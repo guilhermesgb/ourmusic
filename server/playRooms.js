@@ -43,5 +43,26 @@ Meteor.methods({
                 }
             );
         }
+        var playRoom = PlayRooms.find({
+                'roomId': roomId
+            }
+        );
+        var leader = playRoom.leader;
+        if ((leader == null) || !(leader in playRoom.users)) {
+            PlayRooms.update({
+                    'roomId': roomId
+                },
+                {
+                    '$set': {
+                        'leader': Meteor.userId()
+                    }
+                }
+            );
+        }
+        var playRoom2 = PlayRooms.find({
+                'roomId': roomId
+            }
+        );
+        console.log("New LEADER:", playRoom2.leader);
     }
 });

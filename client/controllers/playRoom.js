@@ -41,8 +41,7 @@ angular.module("ourmusic").controller("PlayRoomCtrl", [
                         $scope.startOrResumePlayer();
                     }
                 }
-
-                if ($scope.playRoom.playerState.playing === true) {
+                if ($scope.playRoom.playerState.leader === $rootScope.currentUser._id && $scope.playRoom.playerState.playing === true) {
                     $scope.startOrResumePlayer();
                 }
             });
