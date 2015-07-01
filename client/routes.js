@@ -19,14 +19,12 @@ angular.module("ourmusic").config([
 		    return $meteor.requireUser();
 		}]
 	    }
-        }
-        );
+        });
 	$stateProvider.state('login', {
-                url: '/login',
-                templateUrl: 'client/views/login.ng.html',
-                controller: 'LoginCtrl'
-            }
-        );
+            url: '/login',
+            templateUrl: 'client/views/login.ng.html',
+            controller: 'LoginCtrl'
+        });
         $urlRouterProvider.otherwise("/play_room");
     }
 ]);
