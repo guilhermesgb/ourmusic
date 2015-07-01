@@ -34,8 +34,10 @@ angular.module("ourmusic").controller("LoginCtrl", [
 	    }
 
 	    $scope.loginButtonClicked = function($event){
+                console.log("Login button clicked;");
 		if(Meteor.isCordova){
-		    OurMusicPlugin.login(function(message) {
+                    console.log("OurMusicPlugin will handle login.");
+                    OurMusicPlugin.login(function(message) {
 			console.log("Login: " + message);
 			if(message == "PLAYER_INITIALIZED") {
 			    Session.set("playerInitialized", true);
@@ -47,6 +49,7 @@ angular.module("ourmusic").controller("LoginCtrl", [
 			alert(error);
 		    });
 		} else {
+                    console.log("Browser will handle login.");
 		    $window.location.href = 'https://accounts.spotify.com/en/authorize?client_id='+$scope.client_id+'&response_type=code&redirect_uri='+$scope.redirect_uri+'&scope='+$scope.scope+'&show_dialog=true';
 		}
 	    }

@@ -8,3 +8,6 @@ meteor-platform
 angularui:angular-ui-router
 urigo:angular
 angular:angular-material
+accounts-password
+http
+accounts-ui
