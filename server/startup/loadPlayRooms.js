@@ -5,6 +5,8 @@ if (PlayRooms.find().count() === 0) {
     var playRooms = [
         {
             'roomId': 'GLOBAL',
+            'leader': null,
+            'users': [],
             'playerState': {
                 'playing': false,
                 'trackUri': 'spotify:track:6q9CRTF8dyABIcKj7bCJwf',

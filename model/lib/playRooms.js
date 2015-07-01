@@ -13,8 +13,8 @@ PlayRooms.allow({
 });
 
 Meteor.methods({
-    play: function(roomId, playbackCallbackError) {
-        check(roomId, String);
+    play: function(playbackCallbackError) {
+        var roomId = Meteor.user().currentRoom;
         var playRoom = PlayRooms.findOne({
             'roomId': roomId
         });
@@ -35,8 +35,8 @@ Meteor.methods({
 		    });
         }
     },
-    pause: function(roomId, playbackCallbackError) {
-        check(roomId, String);
+    pause: function(playbackCallbackError) {
+        var roomId = Meteor.user().currentRoom;
         var playRoom = PlayRooms.findOne({
             'roomId': roomId
         });
@@ -54,8 +54,8 @@ Meteor.methods({
 		});
         }
     },
-    skip: function(roomId) {
-	check(roomId, String);
+    skip: function() {
+        var roomId = Meteor.user().currentRoom;
 	var playRoom = PlayRooms.findOne({
 	    'roomId': roomId
 	});
@@ -68,7 +68,7 @@ Meteor.methods({
 	PlayRooms.update({
 	    _id: playRoom._id,
 	},{$set : {
-	    'playlistPos' : (playRoom.playlistPos + 1) % playRoom.playlist.length,
+	    'playlistPos': (playRoom.playlistPos + 1) % playRoom.playlist.length,
 	    "playerState.trackUri": playRoom.playlist[(playRoom.playlistPos + 1) % playRoom.playlist.length],
 	    "playerState.positionInMs": 0
 	}});
@@ -89,7 +89,7 @@ function successPlayStopCallback(roomId){
 	    throw new Meteor.Error(404, "Invalid player state");
 	}
 	if (newPlayerState.event === "TRACK_END") {
-	    Meteor.call("skip",roomId);
+	    Meteor.call("skip");
 	    return;
 	}
 	PlayRooms.update({
@@ -110,7 +110,7 @@ playbackError = function(error, playbackCallbackError) {
 	playbackCallbackError(error);
     }
     if (error === "TRACK_UNAVAILABLE"){
-	Meteor.call("skip",roomId);
+	Meteor.call("skip");
     }
     if (error === "UNKNOWN") {
 	playbackCallbackError(error);
