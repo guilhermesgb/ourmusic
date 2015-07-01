@@ -27,7 +27,7 @@ Meteor.methods({
         check(playRoom.playerState.trackUri, String);
         check(playRoom.playerState.positionInMs, Number);
         if (Meteor.isCordova) {
-            var token = Session.get("authToken");
+	    var token = Meteor.user().accessToken;
             OurMusicPlugin.play(playRoom.playerState.trackUri,
                     playRoom.playerState.positionInMs, token, successPlayStopCallback(roomId),
 		function(error) {
@@ -47,7 +47,7 @@ Meteor.methods({
             throw new Meteor.Error(404, "Invalid player state");
         }
         if (Meteor.isCordova) {
-	    var token = Session.get("authToken");
+	    var token = Meteor.user().accessToken;
             OurMusicPlugin.pause(token, successPlayStopCallback(roomId), 
 		function(error) {
                     throw new Meteor.Error(500, "Error playing track; " + error);
