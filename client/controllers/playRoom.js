@@ -34,6 +34,10 @@ angular.module("ourmusic").controller("PlayRoomCtrl", [
                         $scope.startOrResumePlayer();
                     }
                 }
+
+                if ($scope.playRoom.playerState.playing === true) {
+                    $scope.startOrResumePlayer();
+                }
             });
         });
     }
