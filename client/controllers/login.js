@@ -16,7 +16,7 @@ angular.module("ourmusic").controller("LoginCtrl", [
 				    if(error) {
 					console.log(error);
 				    } else {
-					$location.path("/login");
+					$location.path("/play_room");
 					console.log("logou e mudou de pagina");
 				    }
 				});
