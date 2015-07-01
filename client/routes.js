@@ -1,24 +1,25 @@
-angular.module("ourmusic").run([
-    '$rootScope', '$location',
-    function($rootScope, $location) {
-        $rootScope.$on("$stateChangeError",
-        function(event, next, previous, error) {
-            if (error === "AUTH_REQUIRED") {
-                $location.path("/");
-            }
-        });
-    }
-]);
+angular.module("ourmusic").run(["$rootScope", "$state", function($rootScope, $state) {
+    $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+	if (error === "AUTH_REQUIRED") {
+	    $state.go('login');
+	}
+    });
+}]);
 
 angular.module("ourmusic").config([
     '$urlRouterProvider', '$stateProvider', '$locationProvider',
     function($urlRouterProvider, $stateProvider, $locationProvider){
         $locationProvider.html5Mode(true);
         $stateProvider.state('play_room', {
-                url: '/play_room',
-                templateUrl: 'client/views/playRoom.ng.html',
-                controller: 'PlayRoomCtrl'
-            }
+            url: '/play_room',
+            templateUrl: 'client/views/playRoom.ng.html',
+            controller: 'PlayRoomCtrl',
+	    resolve: {
+		"currentUser": ["$meteor", function($meteor){
+		    return $meteor.requireUser();
+		}]
+	    }
+        }
         );
 	$stateProvider.state('login', {
                 url: '/login',
@@ -26,7 +27,6 @@ angular.module("ourmusic").config([
                 controller: 'LoginCtrl'
             }
         );
-	// TODO(danilon) change to /play_room
-        $urlRouterProvider.otherwise("/login");
+        $urlRouterProvider.otherwise("/play_room");
     }
 ]);
