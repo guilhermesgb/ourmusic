@@ -1,12 +1,10 @@
 angular.module("ourmusic").controller("LoginCtrl", [
-    '$scope', '$stateParams', '$meteor', '$window','$location',
-    function($scope, $stateParams, $meteor, $window,$location) {
+    '$scope', '$stateParams', '$meteor', '$window','$location','$rootScope',
+    function($scope, $stateParams, $meteor, $window,$location,$rootScope) {
 	$scope.client_id = "a86d7ad4269d4a6ea18b167c1f5b811d";
 	$scope.redirect_uri = "http://ourmusic-test.meteor.com/login";
 	$scope.scope = "user-read-private";
-        $meteor.subscribe("play_rooms").then(function(subscription) {
-	    console.log(Meteor.userId());
-
+        $meteor.subscribe("userData").then(function(subscription) {
 	    $scope.callLogin = function(code,redirect_uri){
 		$meteor.call("authenticateSpotifyCode",code,redirect_uri).then(
 		    function(username){
@@ -16,6 +14,8 @@ angular.module("ourmusic").controller("LoginCtrl", [
 				    if(error) {
 					console.log(error);
 				    } else {
+					console.log("authToken", Meteor.user().accessToken);
+					Session.set("authToken", Meteor.user().accessToken);
 					$location.path("/play_room");
 					console.log("logou e mudou de pagina");
 				    }
@@ -39,12 +39,7 @@ angular.module("ourmusic").controller("LoginCtrl", [
                     console.log("OurMusicPlugin will handle login.");
                     OurMusicPlugin.login(function(message) {
 			console.log("Login: " + message);
-			if(message == "PLAYER_INITIALIZED") {
-			    Session.set("playerInitialized", true);
-			} else {
-			    Session.set("authToken", message);
-			    $scope.callLogin(message,"ourmusic://spotify-callback/");
-			}
+			$scope.callLogin(message,"ourmusic://spotify-callback/");
 		    }, function(error) {
 			alert(error);
 		    });
