@@ -15,7 +15,6 @@ angular.module("ourmusic").controller("LoginCtrl", [
 					console.log(error);
 				    } else {
 					console.log("authToken", Meteor.user().accessToken);
-					Session.set("authToken", Meteor.user().accessToken);
 					$location.path("/play_room");
 					console.log("logou e mudou de pagina");
 				    }
