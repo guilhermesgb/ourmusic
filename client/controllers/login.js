@@ -2,7 +2,7 @@ angular.module("ourmusic").controller("LoginCtrl", [
     '$scope', '$stateParams', '$meteor', '$window','$location','$rootScope',
     function($scope, $stateParams, $meteor, $window,$location,$rootScope) {
 	$scope.client_id = "a86d7ad4269d4a6ea18b167c1f5b811d";
-	$scope.redirect_uri = "http://ourmusic-test.meteor.com/login";
+	$scope.redirect_uri = "http://ourmusic.meteor.com/login";
 	$scope.scope = "user-read-private";
         $meteor.subscribe("userData").then(function(subscription) {
 	    $scope.callLogin = function(code,redirect_uri){
