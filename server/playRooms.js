@@ -43,12 +43,11 @@ Meteor.methods({
                 }
             );
         }
-        var playRoom = PlayRooms.find({
-                'roomId': roomId
-            }
-        );
+        var playRoom = PlayRooms.findOne({
+            'roomId': roomId
+        });
         var leader = playRoom.leader;
-        if ((leader == null) || !(leader in playRoom.users)) {
+        if ((leader == null) || playRoom.users.indexOf(leader) < 0) {
             PlayRooms.update({
                     'roomId': roomId
                 },
@@ -59,10 +58,8 @@ Meteor.methods({
                 }
             );
         }
-        var playRoom2 = PlayRooms.find({
-                'roomId': roomId
-            }
-        );
-        console.log("New LEADER:", playRoom2.leader);
+        var playRoom2 = PlayRooms.findOne({
+            'roomId': roomId
+        });
     }
 });

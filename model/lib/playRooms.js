@@ -26,8 +26,8 @@ Meteor.methods({
         }
         check(playRoom.playerState.trackUri, String);
         check(playRoom.playerState.positionInMs, Number);
-        if (playRoom.playerState.leader !== Meteor.userId()) {
-            throw new Meteor.Error(404, "Cannot perform this operation because it's not the leader");
+        if (playRoom.leader !== Meteor.userId()) {
+            throw new Meteor.Error(404, "Cannot perform this operation because you're not the leader. Leader: " + playRoom.leader + "; You: " + Meteor.userId());
         }
         if (Meteor.isCordova) {
 	    var token = Meteor.user().accessToken;
@@ -49,8 +49,8 @@ Meteor.methods({
         if (!playRoom.playerState) {
             throw new Meteor.Error(404, "Invalid player state");
         }
-        if (playRoom.playerState.leader !== Meteor.userId()) {
-            throw new Meteor.Error(404, "Cannot perform this operation because it's not the leader");
+        if (playRoom.leader !== Meteor.userId()) {
+            throw new Meteor.Error(404, "Cannot perform this operation because you're not the leader");
         }
         if (Meteor.isCordova) {
 	    var token = Meteor.user().accessToken;
@@ -71,8 +71,8 @@ Meteor.methods({
 	if (!playRoom.playlist) {
 	    throw new Meteor.Error(404, "No such playlist");
 	}
-        if (playRoom.playerState.leader !== Meteor.userId()) {
-            throw new Meteor.Error(404, "Cannot perform this operation because it's not the leader");
+        if (playRoom.leader !== Meteor.userId()) {
+            throw new Meteor.Error(404, "Cannot perform this operation because you're not the leader");
         }
 	PlayRooms.update({
 	    _id: playRoom._id,
